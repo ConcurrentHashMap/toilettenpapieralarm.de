@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no" />
+	<meta charset="UTF-8" />
+	<title>&#129531;&#128293; Toilettenpapieralarm.de &ndash; Verfügbarkeit von online bestellbarem Toilettenpapier - sofort lieferbar! #WirGegenCorona #BleibtZuhause</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="stylesheet" type="text/css" href="/app.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+		var availability = <%- availability ? JSON.stringify(availability) : 'null;' %>
+	</script>
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-54LC8BR');</script>
+	<!-- End Google Tag Manager -->
+</head>
+<body>
+	<div class="logo-container absolute centered">
+		<a href="/" class="logo">&#129531;&#128293; Toilettenpapieralarm.de</a>
+	</div>
+
+	<div class="content" id="app">
+		<div class="inner">
+			<div class="big centered">
+				<div v-if="availability.available">
+					<b class="block">Es gibt Toilettenpapier!</b>
+					<span class="bigger">&#128512;&#129531;</span>
+				</div>
+				<div v-else>
+					<b class="block">Kein Toilettenpapier lieferbar!</b> 
+					<span class="biggest">&#128169;</span>
+				</div>
+			</div>
+			<div class="small break centered">
+				<div v-if="availability.available && availability.products.length > 0">
+					<p><span :inner-html.prop="availability.products[0].title | truncate(50, true)"></span> ist bei {{ availability.products[0].merchant }} für {{ availability.products[0].price | eurFormatted }} € verfügbar.</p>
+					<p><b><a class="cta" v-bind:href="availability.products[0].url" target="_blank">Jetzt kaufen!</a></b></p>
+				</div>
+				<div v-else>
+					<p>Dieser Status kann sich gegebenenfalls sehr schnell ändern.<br>Möchtest du <b>sofort</b> benachrichtigt werden?</p>
+					<p><b>Wir arbeiten gerade an einer E-Mail-Benachrichtigung.</b></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="copyright centered">
+		<div class="hashtags centered">#WirGegenCorona #BleibtZuhause</div>
+
+		<div class="notes smaller centered">* Ergebnis der Abfrage der Verfügbarkeit von ausgewählten Produkten bei ausgewählten Onlineversandhändlern. Der Status der Verfügbarkeit kann sich gegebenfalls sehr kurzfristig ändern. Alle Angaben ohne Gewähr! Alle Produktbezeichnungen, Logos und Marken sind das Eigentum ihrer jeweiligen Rechteinhaber.</div>
+
+		Made with &hearts; in Düsseldorf.<br>
+		<a href="/impressum">Impressum</a> | <a href="/datenschutz">Datenschutz</a> | <a href="#!" id="btn-revokeChoice">Cookie-Einstellungen</a> | <a href="https://github.com/ConcurrentHashMap/toilettenpapieralarm.de" target="_blank">Mithelfen</a> 
+	</div>
+	<script type="text/javascript" src="/app.js"></script>
+	<script type="text/javascript" src="/cookies.js"></script>
+</body>
+</html>
