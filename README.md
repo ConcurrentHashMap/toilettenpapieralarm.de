@@ -1,4 +1,4 @@
-# toilettenpapieralarm.de
+# 🧻🔥 Toilettenpapieralarm.de
 The code behind my #stayhome project Toilettenpapieralarm.de. No aprils fool!
 
 Contributions welcome! Feel free to get in contact via the website (info@toilettenpapieralarm.de).
