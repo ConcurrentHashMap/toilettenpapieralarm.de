@@ -27,8 +27,7 @@ function sortByPrice(a, b) {
 
 const { Client } = require('pg');
 const client = new Client({
-  connectionString: process.env.DATABASE_URL || "postgres://postgres:pg@localhost:5432/dev",
-  ssl: process.env.DATABASE_URL ? true : false,
+  connectionString: process.env.DATABASE_URL || "postgres://postgres:pg@localhost:5432/dev"
 });
 
 client.connect()
