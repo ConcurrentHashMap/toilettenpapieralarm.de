@@ -53,6 +53,8 @@ client.connect()
 })
 .catch(err => console.error('Connection error with Heroku Postgres', err.stack))
 
+var notify = true;
+
 /**
  * Web scraping
  */
@@ -89,13 +91,11 @@ var j = schedule.scheduleJob('*/1 * * * *', function() {
           ]).then(function(result) {
             result = result[0] ? result[0] : null;
             if(result) {
-
               var query = `
-                UPDATE products SET title = $1, updated = now(), availability = $2, price = $3 RETURNING *;
+                UPDATE products SET title = $1, updated = now(), availability = $2, price = $3 WHERE productid = $4 RETURNING *;
               `
-              client.query(query, [result.title, result.availability, result.price])
+              client.query(query, [result.title, result.availability, result.price, product.productid])
               .then(pgres => {
-                console.log('Updated products');
                 // Nothing to do here...
               })
               .catch(err => {
@@ -176,11 +176,11 @@ Server.get('/availability', function (req, res) {
   getAvailability().then(availability => res.status(200).json(availability));
 });
 
-var notify = true;
 Server.get('/enable-notification', function (req, res) {
   notify = true;
   res.status(200).send('OK');
 });
+
 Server.get('/disable-notification', function (req, res) {
   notify = false;
   res.status(200).send('OK');
