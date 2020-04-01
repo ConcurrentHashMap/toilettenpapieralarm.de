@@ -25,42 +25,44 @@
 	<!-- End Google Tag Manager -->
 </head>
 <body>
-	<div class="logo-container absolute centered">
-		<a href="/" class="logo">&#129531;&#128293; Toilettenpapieralarm.de</a>
-	</div>
+	<div class="container">
+		<div class="logo-container centered">
+			<a href="/" class="logo">&#129531;&#128293; Toilettenpapieralarm.de</a>
+		</div>
 
-	<div class="content" id="app">
-		<div class="inner">
-			<div class="big centered">
-				<div v-if="availability.available">
-					<b class="block">Es gibt Toilettenpapier!</b>
-					<span class="bigger">&#128512;&#129531;</span>
+		<div class="content" id="app">
+			<div class="inner">
+				<div class="big centered">
+					<div v-if="availability.available">
+						<b class="block">Es gibt Toilettenpapier!</b>
+						<span class="bigger">&#128512;&#129531;</span>
+					</div>
+					<div v-else>
+						<b class="block">Kein Toilettenpapier lieferbar!</b> 
+						<span class="biggest">&#128169;</span>
+					</div>
 				</div>
-				<div v-else>
-					<b class="block">Kein Toilettenpapier lieferbar!</b> 
-					<span class="biggest">&#128169;</span>
-				</div>
-			</div>
-			<div class="small break centered">
-				<div v-if="availability.available && availability.products.length > 0">
-					<p><span :inner-html.prop="availability.products[0].title | truncate(50, true)"></span> ist bei {{ availability.products[0].merchant }} für {{ availability.products[0].price | eurFormatted }} € verfügbar.</p>
-					<p><b><a class="cta" v-bind:href="availability.products[0].url" target="_blank">Jetzt kaufen!</a></b></p>
-				</div>
-				<div v-else>
-					<p>Dieser Status kann sich gegebenenfalls sehr schnell ändern.<br>Möchtest du <b>sofort</b> benachrichtigt werden?</p>
-					<p><b>Wir arbeiten gerade an einer E-Mail-Benachrichtigung.</b></p>
+				<div class="small break centered">
+					<div v-if="availability.available && availability.products.length > 0">
+						<p><span :inner-html.prop="availability.products[0].title | truncate(50, true)"></span> ist bei {{ availability.products[0].merchant }} für {{ availability.products[0].price | eurFormatted }} € verfügbar.</p>
+						<p><b><a class="cta" v-bind:href="availability.products[0].url" target="_blank">Jetzt kaufen!</a></b></p>
+					</div>
+					<div v-else>
+						<p>Dieser Status kann sich gegebenenfalls sehr schnell ändern.<br>Möchtest du <b>sofort</b> benachrichtigt werden?</p>
+						<p><b>Wir arbeiten gerade an einer E-Mail-Benachrichtigung.</b></p>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="copyright centered">
-		<div class="hashtags centered">#WirGegenCorona #BleibtZuhause</div>
+		<div class="copyright centered">
+			<div class="hashtags centered">#WirGegenCorona #BleibtZuhause</div>
 
-		<div class="notes smaller centered">* Ergebnis der Abfrage der Verfügbarkeit von ausgewählten Produkten bei ausgewählten Onlineversandhändlern. Der Status der Verfügbarkeit kann sich gegebenfalls sehr kurzfristig ändern. Alle Angaben ohne Gewähr! Alle Produktbezeichnungen, Logos und Marken sind das Eigentum ihrer jeweiligen Rechteinhaber.</div>
+			<div class="notes smaller centered">* Ergebnis der Abfrage der Verfügbarkeit von ausgewählten Produkten bei ausgewählten Onlineversandhändlern. Der Status der Verfügbarkeit kann sich gegebenfalls sehr kurzfristig ändern. Alle Angaben ohne Gewähr! Alle Produktbezeichnungen, Logos und Marken sind das Eigentum ihrer jeweiligen Rechteinhaber.</div>
 
-		Made with &hearts; in Düsseldorf.<br>
-		<a href="/impressum">Impressum</a> | <a href="/datenschutz">Datenschutz</a> | <a href="#!" id="btn-revokeChoice">Cookie-Einstellungen</a> | <a href="https://github.com/ConcurrentHashMap/toilettenpapieralarm.de" target="_blank">Mithelfen</a> 
+			Made with &hearts; in Düsseldorf.<br>
+			<a href="/impressum">Impressum</a> | <a href="/datenschutz">Datenschutz</a> | <a href="#!" id="btn-revokeChoice">Cookie-Einstellungen</a> | <a href="https://github.com/ConcurrentHashMap/toilettenpapieralarm.de" target="_blank">Mithelfen</a> 
+		</div>
 	</div>
 	<script type="text/javascript" src="/app.js"></script>
 	<script type="text/javascript" src="/cookies.js"></script>

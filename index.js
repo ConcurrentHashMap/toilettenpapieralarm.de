@@ -122,7 +122,7 @@ function getAvailability() {
     .then(pgres => {
       if(pgres.rows.length > 0) {
         var sorted = pgres.rows.sort(sortByPrice);
-        availability.products = sorted.filter(result => result.availability.toLowerCase().includes('auf lager') && !result.availability.toLowerCase().includes("nicht"));
+        availability.products = sorted.filter(result => result.availability && result.availability.toLowerCase().includes('auf lager') && !result.availability.toLowerCase().includes("nicht"));
       }
       if(availability.products.length > 0) {
         availability.available = true;
