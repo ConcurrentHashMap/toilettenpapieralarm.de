@@ -5,16 +5,17 @@ const Server = express();
 const path = require('path');
 const ejs = require('ejs');
 const cors = require('cors');
-var Promise = require('promise');
-const Xray = require('x-ray');
+const Promise = require('promise');
+const mailgun = require('mailgun-js')({apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN});
 
+const Xray = require('x-ray');
 const x = Xray({
     filters: {
       trim: function(value) {
         return typeof value === 'string' ? value.trim() : value;
       },
       price: function(value) {
-        return parseFloat(value.substring(0, value.indexOf('€')-1).replace(/,/, '.'));
+        return value ? parseFloat(value.substring(0, value.indexOf('€')-1).replace(/,/, '.')) : null;
       } 
     }
 });
@@ -81,26 +82,20 @@ var j = schedule.scheduleJob('*/1 * * * *', function() {
         [...new Set(products)].forEach(product => {     
           x(product.url, 'html', [
             {
-              pageTitle: 'title | trim',
               title: '#title | trim',
-              brandName: 'a#bylineInfo | trim',
               availability: '#availability span | trim',
-              price: '#priceblock_ourprice | price',
-              delivery: '#ddmDeliveryMessage'
+              price: '#priceblock_ourprice | price'
           }
           ]).then(function(result) {
             result = result[0] ? result[0] : null;
             if(result) {
-
-              if(result.pageTitle && result.pageTitle.toLowerCase().includes("Bot")) {
-                console.warn("Bot check triggered");
-              }
 
               var query = `
                 UPDATE products SET title = $1, updated = now(), availability = $2, price = $3 RETURNING *;
               `
               client.query(query, [result.title, result.availability, result.price])
               .then(pgres => {
+                console.log('Updated products');
                 // Nothing to do here...
               })
               .catch(err => {
@@ -114,6 +109,25 @@ var j = schedule.scheduleJob('*/1 * * * *', function() {
   }).catch(err => {
     console.log('Error while fetching products from database', err)
   });
+
+  if(notify)  {
+    getAvailability().then(availability => {
+      // E-Mail notification if there is any toilet paper available
+      const data = {
+        from: 'Toilettenpapieralarm.de <alarm@toilettenpapieralarm.de>',
+        to: 'info@toilettenpapieralarm.de', // For my testing only
+        subject: '🧻🔥 Alarm! Es ist Toilettenpapier verfügbar!',
+        text: `${availability.products[0].title} ist bei ${availability.products[0].merchant} für ${availability.products[0].price.replace(/\./, ',')} € verfügbar. Link: ${availability.products[0].url}
+        
+--
+Von Benachrichtigungen abmelden: https://toilettenpapieralarm.de/disable-notification`
+      };
+      mailgun.messages().send(data, function (error, body) {
+        data.text;
+        console.log(body);
+      });
+    });
+  }
 });
 
 function getAvailability() {
@@ -129,8 +143,8 @@ function getAvailability() {
     client.query(query)
     .then(pgres => {
       if(pgres.rows.length > 0) {
-        var sorted = pgres.rows.sort(sortByPrice);
-        availability.products = sorted.filter(result => result.availability && result.availability.toLowerCase().includes('auf lager') && !result.availability.toLowerCase().includes("nicht"));
+        var filtered = pgres.rows.filter(result => result.availability && result.availability.toLowerCase().includes('auf lager') && !result.availability.toLowerCase().includes("nicht"));
+        availability.products = filtered.sort(sortByPrice)
       }
       if(availability.products.length > 0) {
         availability.available = true;
@@ -160,6 +174,16 @@ Server.get('*', function(req, res, next) {
 
 Server.get('/availability', function (req, res) {
   getAvailability().then(availability => res.status(200).json(availability));
+});
+
+var notify = true;
+Server.get('/enable-notification', function (req, res) {
+  notify = true;
+  res.status(200).send('OK');
+});
+Server.get('/disable-notification', function (req, res) {
+  notify = false;
+  res.status(200).send('OK');
 });
 
 Server.get('/', function(req, res) {
