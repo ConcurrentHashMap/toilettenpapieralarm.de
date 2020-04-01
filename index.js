@@ -81,13 +81,21 @@ var j = schedule.scheduleJob('*/1 * * * *', function() {
         [...new Set(products)].forEach(product => {     
           x(product.url, 'html', [
             {
+              pageTitle: 'title | trim',
               title: '#title | trim',
+              brandName: 'a#bylineInfo | trim',
               availability: '#availability span | trim',
-              price: '#priceblock_ourprice | price'
+              price: '#priceblock_ourprice | price',
+              delivery: '#ddmDeliveryMessage'
           }
           ]).then(function(result) {
             result = result[0] ? result[0] : null;
             if(result) {
+
+              if(result.pageTitle && result.pageTitle.toLowerCase().includes("Bot")) {
+                console.warn("Bot check triggered");
+              }
+
               var query = `
                 UPDATE products SET title = $1, updated = now(), availability = $2, price = $3 RETURNING *;
               `
