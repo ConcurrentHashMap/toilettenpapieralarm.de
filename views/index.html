@@ -44,8 +44,8 @@
 				</div>
 				<div class="small break centered">
 					<div v-if="availability.available && availability.products.length > 0">
-						<p><span :inner-html.prop="availability.products[0].title | truncate(50, true)"></span> ist bei {{ availability.products[0].merchant }} für {{ availability.products[0].price | eurFormatted }} € verfügbar.</p>
-						<p><b><a class="cta" v-bind:href="availability.products[0].url" target="_blank">Jetzt kaufen!</a></b></p>
+						<p><span :inner-html.prop="availability.products[0].title | truncate(50, true)"></span> ist bei {{ availability.products[0].shop }} für {{ availability.products[0].price | eurFormatted }} € verfügbar.</p>
+						<p><b class="cta"><a class="cta" id="cta-link" v-bind:href="availability.products[0].partnerUrl" target="_blank">Jetzt kaufen!</a> *</b></p>
 					</div>
 					<div v-else>
 						<p>Dieser Status kann sich gegebenenfalls sehr schnell ändern.<br>Möchtest du <b>sofort</b> benachrichtigt werden?</p>
@@ -58,7 +58,7 @@
 		<div class="copyright centered">
 			<div class="hashtags centered">#WirGegenCorona #BleibtZuhause</div>
 
-			<div class="notes smaller centered">* Ergebnis der Abfrage der Verfügbarkeit von ausgewählten Produkten bei ausgewählten Onlineversandhändlern. Der Status der Verfügbarkeit kann sich gegebenfalls sehr kurzfristig ändern. Alle Angaben ohne Gewähr! Alle Produktbezeichnungen, Logos und Marken sind das Eigentum ihrer jeweiligen Rechteinhaber.</div>
+			<div class="notes smaller centered">* Ergebnis der Abfrage der Verfügbarkeit von ausgewählten Produkten bei ausgewählten Onlineversandhändlern. Der Status der Verfügbarkeit kann sich gegebenfalls sehr kurzfristig ändern. Alle Angaben ohne Gewähr! Alle Produktbezeichnungen, Logos und Marken sind das Eigentum ihrer jeweiligen Rechteinhaber. Als Amazon-Partner verdienen wir an qualifizierten Verkäufen.</div>
 
 			Made with &hearts; in Düsseldorf.<br>
 			<a href="/impressum">Impressum</a> | <a href="/datenschutz">Datenschutz</a> | <a href="#!" id="btn-revokeChoice">Cookie-Einstellungen</a> | <a href="https://github.com/ConcurrentHashMap/toilettenpapieralarm.de" target="_blank">Mithelfen</a> 

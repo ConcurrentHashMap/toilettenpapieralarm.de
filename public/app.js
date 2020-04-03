@@ -9,7 +9,7 @@ var app = new Vue({
     filters: {
         eurFormatted: function (value) {
           if (!value) return ''
-          value = value.toString()
+          value = parseFloat(value).toFixed(2)
           return value.replace(/\./, ',')
         },
         truncate: function(value, n, useWordBoundary) {
