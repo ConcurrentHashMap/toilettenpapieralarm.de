@@ -63,7 +63,7 @@ setIntervalAsync(
     var products = await Webscraper.run(Product);
     console.log(products);
   },
-  1000*30 // every 30 seconds
+  1000*5*60 // every 5 minutes
 );
 
 /**
