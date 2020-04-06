@@ -1,19 +1,15 @@
 module.exports = (Helpers, axios, cheerio) => {
-  const { Op } = require("sequelize");
-
-  async function asyncForEach(array, callback) {
-    for (let index = 0; index < array.length; index++) {
-      await callback(array[index], index, array);
-    }
-  }
+  const { Op } = require('sequelize');
 
   const Webscraper = {
     run: async (Product, timeout = 300000) => {
-      
+
       var products = await Product.findAll({
         where: {
+          isEnabled: true,
           [Op.or]: [
-            { updatedAt: {
+            {
+              updatedAt: {
                 [Op.lt]: new Date() - timeout,
               }
             },
@@ -25,11 +21,9 @@ module.exports = (Helpers, axios, cheerio) => {
       var updatedProducts = [];
 
       // For every product in our database, that was updated > $timeout ago, fetch again
-      if(products && products.length > 0) {
+      if (products && products.length > 0) {
         var scrape = async () => {
-          await asyncForEach(products, async(product) => {
-
-            console.log(`Scraping ${product.url}`);
+          await Helpers.asyncForEach(products, async (product) => {
 
             // Fetch content with axios
             var response = await axios({
@@ -37,20 +31,20 @@ module.exports = (Helpers, axios, cheerio) => {
               url: product.url,
               header: {
                 'User-Agent':
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
+                  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
               },
             });
 
             var $ = cheerio.load(response.data);
 
             product.price = 0.0;
-  
-            if($('#priceblock_ourprice').length) {
+
+            if ($('#priceblock_ourprice').length) {
               product.price = Helpers.getPriceAsFloat($('#priceblock_ourprice').text());
             } else if ($('#priceblock_saleprice').length) {
               product.price = Helpers.getPriceAsFloat($('#priceblock_saleprice').text());
             }
-  
+
             product.title = $('#productTitle').text().trim();
             product.brandName = $('#bylineInfo').text().trim();
             product.availability = $('#availability span').text().trim();
@@ -59,9 +53,9 @@ module.exports = (Helpers, axios, cheerio) => {
             product.isAvailable = Helpers.extractIsAvailable(product.availability);
             product.deliveryDate = Helpers.extractDeliveryDate(product.deliveryMessage);
             product.forceUpdate = false;
-            
-            product.save();
+
             updatedProducts.push(product);
+            return await product.save();
           });
         }
 
@@ -70,7 +64,7 @@ module.exports = (Helpers, axios, cheerio) => {
         return updatedProducts;
       }
 
-      return updatedProducts;                      
+      return updatedProducts;
     }
   }
 

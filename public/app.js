@@ -3,22 +3,23 @@ var app = new Vue({
     data: {
         availability: availability
     },
-    mounted () {
+    /*
+    mounted() {
         axios.get('/availability').then(response => (this.info = response.data))
-    },
+    },*/
     filters: {
         eurFormatted: function (value) {
-          if (!value) return ''
-          value = parseFloat(value).toFixed(2)
-          return value.replace(/\./, ',')
+            if (!value) return ''
+            value = parseFloat(value).toFixed(2)
+            return value.replace(/\./, ',')
         },
-        truncate: function(value, n, useWordBoundary) {
+        truncate: function (value, n, useWordBoundary) {
             if (!value) return ''
             if (value.length <= n) { return value; }
-            var subString = value.substr(0, n-1);
-            return (useWordBoundary 
-               ? subString.substr(0, subString.lastIndexOf(' ')) 
-               : subString) + "&hellip;";
+            var subString = value.substr(0, n - 1);
+            return (useWordBoundary
+                ? subString.substr(0, subString.lastIndexOf(' '))
+                : subString) + "&hellip;";
         }
-      }
+    }
 });

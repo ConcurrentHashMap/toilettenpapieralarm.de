@@ -45,7 +45,7 @@
 						<span class="bigger">&#128512;&#129531;</span>
 					</div>
 					<div v-else>
-						<b class="block">Kein Toilettenpapier lieferbar!</b>
+						<b class="block">Du bist zu spät...</b>
 						<span class="biggest">&#128169;</span>
 					</div>
 				</div>
@@ -58,25 +58,10 @@
 									target="_blank">Jetzt kaufen!</a> *</b></p>
 					</div>
 					<div v-else>
-						<p>Der Verfügbarkeitsstatus von Produkten kann sich gegebenenfalls sehr schnell ändern. *<br>Möchtest du <b>sofort</b>
-							benachrichtigt werden?</p>
-						<!--
-						<form class="subscribe" action="/subscribe" method="POST">
-							<input type="email" id="email" name="email" placeholder="Deine E-Mail-Adresse" tabindex="1"
-								required>
-							<label class="terms">
-								<input type="checkbox" id="acceptedTerms" name="acceptedTerms" value="true" tabindex="2"
-									required>
-								Ich habe die <a href="/datenschutz" target="_blank">Datenschutzbestimmungen</a> gelesen
-								und akzeptiert.
-							</label>
-							<input type="submit" value="Ich möchte benachrichtigt werden!" tabindex="3">
-							<p class="smallest">Nach der Bestätigung deiner E-Mail-Adresse erhältst du
-								Benachrichtigungen, sobald sich der
-								Verfügbarkeitsstatus ändert. Die Abmeldung ist jederzeit möglich.</p>
-						</form>
-						-->
-						<p><b>Wir arbeiten gerade an einer E-Mail-Benachrichtigung.</b></p>
+						<p><span :inner-html.prop="availability.products[0].title | truncate(50, true)"></span> ist scheinbar gerade nicht mehr bei
+							{{ availability.products[0].shop }} verfügbar.</p>
+							<p><b class="cta"><a class="cta" id="cta-link" v-bind:href="availability.products[0].partnerUrl"
+								target="_blank">Auf {{ availability.products[0].shop }} ansehen</a> *</b></p>
 					</div>
 				</div>
 			</div>

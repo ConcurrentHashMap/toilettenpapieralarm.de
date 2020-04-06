@@ -15,7 +15,7 @@ cookieconsent.initialise({
     "theme": "classic",
     "type": "opt-in",
     "content": {
-        "message": "Wir verwenden Cookies, um den Traffic auf dieser Website zu analysieren und uns deine Cookie-Einstellungen zu merken.",
+        "message": "Wir verwenden Cookies, um den Traffic auf dieser Website zu analysieren, Anzeigen zu optimieren und Inhalte zu personalisieren.",
         "deny": "Ablehnen",
         "allow": "Cookies akzeptieren",
         "link": "Mehr erfahren",
@@ -43,11 +43,14 @@ cookieconsent.initialise({
     p = popup;
 });
 
-var revokeBtn = document.getElementById('btn-revokeChoice');
-if(revokeBtn) {
-    revokeBtn.onclick = function () {
-        p.open();
-    };
+var revokeBtn = document.getElementsByClassName('btn-revokeChoice');
+if(revokeBtn && revokeBtn.length) {
+    var i;
+    for (i = 0; i < revokeBtn.length; i++) {
+        revokeBtn[i].onclick = function () {
+            p.open();
+        };
+    }
 }
 
 // Disable tracking if the opt-out cookie exists.

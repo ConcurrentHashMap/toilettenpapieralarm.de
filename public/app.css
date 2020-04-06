@@ -1,7 +1,7 @@
 html, body {
     background: #fff;
     color: #13293D;
-    font-family: sans-serif;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     width: 100%;
     min-height: 100%;
     margin: 0;
@@ -9,7 +9,7 @@ html, body {
 }
 
 a {
-    color: #0066b3
+    color: #0066b3;
 }
 
 .red {
@@ -22,6 +22,10 @@ a {
 
 .smaller {
     font-size: 0.85em;
+}
+
+.smallest {
+    font-size: 0.75rem;
 }
 
 .logo-container {
@@ -42,9 +46,9 @@ a {
 }
 
 .legal {
-    width: 85vw; 
-    margin-left: auto; 
-    margin-right: auto; 
+    width: 85vw;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 2.5rem;
     text-align: left
 }
@@ -118,7 +122,7 @@ a {
 
 .hashtags {
     max-width: 85vw;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     font-size: 1.5rem;
 }
 
@@ -144,8 +148,63 @@ table, th, td {
     padding: 1rem;
 }
 
+form.subscribe {
+    display: flex;
+    flex-direction: column;
+    width: 35vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+}
+
+input[type="email"] {
+    border-radius: 15px;
+    border: 0;
+    background-color: #efefef;
+    padding: 1rem;
+    transition: all 0.30s ease-in-out;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+}
+
+input[type="email"]:focus {
+    outline: 0;
+    box-shadow: 0 0 10px #0066b3;
+}
+
+input[type=checkbox] {
+    transform: scale(1.25);
+}
+
+input[type="submit"] {
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 0;
+    color: #efefef;
+    background-color: #0066b3;
+    padding: 1rem;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+input[type="submit"]:focus {
+    outline: 0;
+}
+
+label.terms {
+    font-size: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
 @media all and (max-width: 1023px) {
     html {
         font-size: 66%
+    }
+    form.subscribe {
+        width: 80vw;
     }
 }
