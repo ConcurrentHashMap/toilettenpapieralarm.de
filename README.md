@@ -6,8 +6,8 @@ Contributions welcome! Feel free to get in contact via the website (info@toilett
 ### Roadmap/Planned features:
 * Enhance web scraping (Amazon seems to be blocking some requests due to anti-bot check)
 * Add more products and additional merchants (DM.de, Rossmann, Müller)
-* Implement notification service
-* Implement registration for email subscription list for the notification service
+* ~~Implement notification service~~ :white_check_mark:
+* ~~Implement registration for email subscription list for the notification service~~ :white_check_mark:
 
 ### License
 MIT
