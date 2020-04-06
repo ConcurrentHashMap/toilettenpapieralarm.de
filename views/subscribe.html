@@ -44,7 +44,7 @@
 					<div>
 						<p>Der Verfügbarkeitsstatus von Produkten kann sich gegebenenfalls sehr schnell ändern. *<br>Möchtest du <b>sofort</b>
 							benachrichtigt werden?</p>
-						<form class="subscribe" action="/subscribe" method="POST">
+						<form id="subscribe" class="subscribe" action="/subscribe" method="POST">
 							<input type="email" id="email" name="email" placeholder="Deine E-Mail-Adresse" tabindex="1"
 								required>
 							<label class="terms">
@@ -53,7 +53,7 @@
 								Ich habe die <a href="/datenschutz" target="_blank">Datenschutzbestimmungen</a> gelesen
 								und akzeptiert.
 							</label>
-							<input type="submit" value="Ich möchte benachrichtigt werden!" tabindex="3">
+							<input id="submitö" type="submit" value="Ich möchte benachrichtigt werden!" tabindex="3">
 							<p class="smallest">Nach der Bestätigung deiner E-Mail-Adresse erhältst du
 								Benachrichtigungen, sobald sich der
 								Verfügbarkeitsstatus ändert. Die Abmeldung ist jederzeit möglich.</p>

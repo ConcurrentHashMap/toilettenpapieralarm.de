@@ -115,7 +115,7 @@ setIntervalAsync(
       }
     });
   },
-  1000 * 60 * 3 // run every 3 minutes
+  1000 * 60 * 5 // run every 5 minutes
 );
 
 /**
